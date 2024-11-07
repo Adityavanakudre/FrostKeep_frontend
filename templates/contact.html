@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Contact Us - FrostKeep Warehouse Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+</head>
+<body class="container">
+    <header class="text-center my-4">
+        <h1>Contact Us</h1>
+        <p>Contact us for pricing and further inquiries.</p>
+    </header>
+    
+    <section class="my-4">
+        <p><strong>Contact Name:</strong> Aditya Vanakudre</p>
+        <p><strong>Phone:</strong> 562-225-3540</p>
+        <p><strong>Address:</strong> 2021 North Beverly Plaza, Long Beach, CA 90815</p>
+        <p><strong>Email:</strong> <a href="mailto:adityavanakudre15@gmail.com">adityavanakudre15@gmail.com</a></p>
+    </section>
+
+    <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Back to Home</a>
+
+    <footer class="text-center mt-5">
+        <p>&copy; {{ year }} FrostKeep Warehouse Solutions. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Check if user navigated back using the browser's back button
+        window.onpopstate = function(event) {
+            // Redirect user to the home page
+            window.location.href = "{{ url_for('home') }}";
+        };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

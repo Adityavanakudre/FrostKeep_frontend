@@ -1,0 +1,87 @@
+/* General styling for body and container */
+/* Add this to styles.css */
+body {
+    background: linear-gradient(to right, #f5f7fa, #dfe9f3); /* Light gradient */
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1, h3 {
+    color: #0044cc;
+    text-align: center;
+}
+
+p {
+    line-height: 1.6;
+}
+
+/* Navigation Styling */
+nav {
+    background-color: #0044cc;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+nav a {
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #0056b3;
+    border: none;
+}
+
+.btn-secondary, .btn-info {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Footer styling */
+footer {
+    margin-top: 40px;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #666;
+    border-top: 1px solid #ccc;
+}
+
+/* Additional styling for modals and tables */
+.table {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: #0044cc;
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
