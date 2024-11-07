@@ -1,8 +1,7 @@
-Flask==2.2.2
-requests==2.31.0         # Adjusted to satisfy conda-repo-cli
-werkzeug==2.0.3
-pyyaml==6.0.1            # Adjusted to satisfy conda-repo-cli
-clyent==1.2.1            # Adjusted to satisfy conda-repo-cli
-requests_mock            # Added to satisfy conda-repo-cli
-pyqt5<5.16               # Added to satisfy spyder
-pyqtwebengine<5.16       # Added to satisfy spyder
+click==7.1.2
+Flask==1.1.2
+gunicorn==20.0.4
+itsdangerous==1.1.0
+Jinja2==2.11.3
+MarkupSafe==1.1.1
+Werkzeug==1.0.1
