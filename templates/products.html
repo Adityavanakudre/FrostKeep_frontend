@@ -1,87 +1,125 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List - FrostKeep Warehouse Solutions</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .table-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .modal-header {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .modal-footer {
+            border-top: 1px solid #dee2e6;
+        }
+        .btn-primary, .btn-secondary, .btn-success, .btn-danger, .btn-info {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+        .btn-group button {
+            margin-right: 5px;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body class="container">
+    <!-- Header Section -->
     <header class="text-center my-4">
         <h1>Product List</h1>
-        <p>Manage your inventory with ease.</p>
+        <p class="text-muted">Manage your inventory efficiently with FrostKeep Warehouse Solutions.</p>
     </header>
 
-    <!-- Home Button to redirect to the index (home) page -->
+    <!-- Action Buttons -->
     <div class="d-flex justify-content-between align-items-center my-4">
         <a href="{{ url_for('home') }}" class="btn btn-primary">Home</a>
         <a href="{{ url_for('get_deleted_products') }}" class="btn btn-secondary">Show Deleted Records</a>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createProductModal">Create New Product</button>
     </div>
 
-    <table class="table table-hover table-bordered mt-3">
-        <thead class="table-primary">
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th class="text-center">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for product in products %}
+    <!-- Product Table -->
+    <div class="table-container">
+        <table class="table table-hover table-bordered mt-3">
+            <thead class="table-primary">
                 <tr>
-                    <td>{{ product.name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>${{ product.price }}</td>
-                    <td>{{ product.quantity }}</td>
-                    <td class="text-center">
-                        <div class="btn-group" role="group">
-                            <!-- Delete Button triggers the delete confirmation modal -->
-                            <button class="btn btn-danger btn-sm me-1" onclick="openDeleteModal('{{ product.id }}', '{{ product.name }}')">Delete</button>
-                            <a href="{{ url_for('product_history', id=product.id) }}" class="btn btn-info btn-sm me-1">History</a>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal{{ product.id }}">Update</button>
-                        </div>
-                    </td>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th class="text-center">Actions</th>
                 </tr>
-
-                <!-- Update Product Modal -->
-                <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header bg-primary text-white">
-                                <h5 class="modal-title" id="updateModalLabel">Update Product</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-danger btn-sm" onclick="openDeleteModal('{{ product.id }}', '{{ product.name }}')">Delete</button>
+                                <a href="{{ url_for('product_history', id=product.id) }}" class="btn btn-info btn-sm">History</a>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal{{ product.id }}">Update</button>
                             </div>
-                            <form action="{{ url_for('update_product', id=product.id) }}" method="POST">
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" class="form-control" name="name" value="{{ product.name }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="description" class="form-label">Description</label>
-                                        <input type="text" class="form-control" name="description" value="{{ product.description }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="price" class="form-label">Price</label>
-                                        <input type="number" class="form-control" name="price" value="{{ product.price }}" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="quantity" class="form-label">Quantity</label>
-                                        <input type="number" class="form-control" name="quantity" value="{{ product.quantity }}" required>
-                                    </div>
+                        </td>
+                    </tr>
+
+                    <!-- Update Product Modal -->
+                    <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title" id="updateModalLabel">Update Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                </div>
-                            </form>
+                                <form action="{{ url_for('update_product', id=product.id) }}" method="POST">
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Name</label>
+                                            <input type="text" class="form-control" name="name" value="{{ product.name }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Description</label>
+                                            <input type="text" class="form-control" name="description" value="{{ product.description }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" class="form-control" name="price" value="{{ product.price }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="quantity" class="form-label">Quantity</label>
+                                            <input type="number" class="form-control" name="quantity" value="{{ product.quantity }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
@@ -104,11 +142,48 @@
         </div>
     </div>
 
-    <footer class="text-center mt-5">
+    <!-- Create New Product Modal -->
+    <div class="modal fade" id="createProductModal" tabindex="-1" aria-labelledby="createProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="createProductModalLabel">Create New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url_for('create_product') }}" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" name="description" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Create Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
         <p>&copy; {{ year }} FrostKeep Warehouse Solutions. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript for Opening Delete Modal with Product Info -->
+    <!-- JavaScript for Opening Delete Modal -->
     <script>
         function openDeleteModal(productId, productName) {
             document.getElementById('productName').textContent = productName;
@@ -118,6 +193,7 @@
         }
     </script>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
